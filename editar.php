@@ -9,7 +9,7 @@ if ($_POST) {
     $telefono = $_POST['telefono'];
 
     $sql = "UPDATE usuarios SET 
-            nombre='$nombre',
+            nombre='$nombre.',
             email='$email',
             telefono='$telefono'
             WHERE id=$id";
