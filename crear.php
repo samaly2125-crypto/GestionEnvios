@@ -1,26 +1,47 @@
 <?php
 include("conexion.php");
 
-if ($_POST) {
-    $nombre = $_POST['nombre'];
-    $email = $_POST['email'];
-    $telefono = $_POST['telefono'];
+if($_POST){
 
-    $sql = "INSERT INTO usuarios (nombre, email, telefono)
-            VALUES ('$nombre', '$email', '$telefono')";
+    $codigo = $_POST['codigo'];
+    $descripcion = $_POST['descripcion'];
+    $destino = $_POST['destino'];
 
-    if ($conn->query($sql)) {
-        echo "Usuario creado correctamente<br>";
-        echo "<a href='index.php'>Volver</a>";
-    } else {
-        echo "Error: " . $conn->error;
-    }
+    $sql = "INSERT INTO envios(codigo, descripcion, destino)
+            VALUES('$codigo', '$descripcion', '$destino')";
+
+    $conexion->query($sql);
+
+    header("Location: index.php");
 }
 ?>
 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crear Envío</title>
+</head>
+<body>
+
+<h2>Crear Envío</h2>
+
 <form method="POST">
-    Nombre: <input type="text" name="nombre"><br>
-    Email: <input type="text" name="email"><br>
-    Teléfono: <input type="text" name="telefono"><br>
+
+    Código:
+    <input type="text" name="codigo">
+    <br><br>
+
+    Descripción:
+    <input type="text" name="descripcion">
+    <br><br>
+
+    Destino:
+    <input type="text" name="destino">
+    <br><br>
+
     <button type="submit">Guardar</button>
+
 </form>
+
+</body>
+</html>

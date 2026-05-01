@@ -3,32 +3,57 @@ include("conexion.php");
 
 $id = $_GET['id'];
 
-if ($_POST) {
-    $nombre = $_POST['nombre'];
-    $email = $_POST['email'];
-    $telefono = $_POST['telefono'];
+$resultado = $conexion->query("SELECT * FROM envios WHERE id=$id");
 
-    $sql = "UPDATE usuarios SET 
-            nombre='$nombre.',
-            email='$email',
-            telefono='$telefono'
+$fila = $resultado->fetch_assoc();
+
+if($_POST){
+
+    $codigo = $_POST['codigo'];
+    $descripcion = $_POST['descripcion'];
+    $destino = $_POST['destino'];
+
+    $sql = "UPDATE envios 
+            SET codigo='$codigo',
+                descripcion='$descripcion',
+                destino='$destino'
             WHERE id=$id";
 
-    if ($conn->query($sql)) {
-        echo "Actualizado correctamente<br>";
-        echo "<a href='index.php'>Volver</a>";
-    } else {
-        echo "Error: " . $conn->error;
-    }
-}
+    $conexion->query($sql);
 
-$result = $conn->query("SELECT * FROM usuarios WHERE id=$id");
-$row = $result->fetch_assoc();
+    header("Location: index.php");
+}
 ?>
 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Editar Envío</title>
+</head>
+<body>
+
+<h2>Editar Envío</h2>
+
 <form method="POST">
-    Nombre: <input type="text" name="nombre" value="<?php echo $row['nombre']; ?>"><br>
-    Email: <input type="text" name="email" value="<?php echo $row['email']; ?>"><br>
-    Teléfono: <input type="text" name="telefono" value="<?php echo $row['telefono']; ?>"><br>
+
+    Código:
+    <input type="text" name="codigo"
+    value="<?php echo $fila['codigo']; ?>">
+    <br><br>
+
+    Descripción:
+    <input type="text" name="descripcion"
+    value="<?php echo $fila['descripcion']; ?>">
+    <br><br>
+
+    Destino:
+    <input type="text" name="destino"
+    value="<?php echo $fila['destino']; ?>">
+    <br><br>
+
     <button type="submit">Actualizar</button>
+
 </form>
+
+</body>
+</html>

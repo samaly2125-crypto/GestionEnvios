@@ -1,13 +1,11 @@
 <?php
+
 include("conexion.php");
 
 $id = $_GET['id'];
 
-if ($conn->query("DELETE FROM usuarios WHERE id=$id")) {
-    echo "Eliminado correctamente<br>";
-} else {
-    echo "Error: " . $conn->error;
-}
+$conexion->query("DELETE FROM envios WHERE id=$id");
 
-echo "<a href='index.php'>Volver</a>";
+header("Location: index.php");
+
 ?>
